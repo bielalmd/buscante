@@ -15,9 +15,12 @@ export class ListaLivrosComponent {
   buscarLivros() {
     this.service
       .buscar(this.campoBusca)
-      .subscribe((retornoAPI) => console.log(retornoAPI),
-      (error) => console.log(error)
-      
-      )
+      .subscribe({
+        next: retornoAPI => console.log(retornoAPI),
+        error: erro => console.log(erro),
+        complete: () => console.log('Observable complete')
+        
+        
+      }) 
   }
 }
