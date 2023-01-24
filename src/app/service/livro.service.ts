@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
-import { LivrosResultado } from '../models/interfaces';
+import { Item, LivrosResultado } from '../models/interfaces';
 
 @Injectable({
   providedIn: "root",
@@ -12,15 +12,19 @@ export class LivroService {
 
   constructor(private http: HttpClient) {}
 
-  buscar(valorDigitado: string): Observable<LivrosResultado> {
+  buscar(valorDigitado: string): Observable<Item[]> {
     const params = new HttpParams().append("q", valorDigitado);
     return this.http
       .get<LivrosResultado>(this.API, { params })
       .pipe(
-        tap ((retornoAPI) => console.log('fluxo do tap',retornoAPI))
+        tap (retornoAPI => console.log('fluxo do tap', retornoAPI)),
+        map(resultado => resultado.items),
+        tap(resultado => console.log('Fluxo apos map', resultado)
+        )
       )
   }
 }
 
 // pipe é como se fosse um "cano" por vai passar um fluxo de informacoes e aonde vamos aplicar
 // tap nao modifica os dados, serve apenas para visualiza-los
+// map realiza uma mudanca, os dados sao recebidos e transformados
