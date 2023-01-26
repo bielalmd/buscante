@@ -25,6 +25,8 @@ export class LivroService {
   }
 }
 
-// pipe é como se fosse um "cano" por vai passar um fluxo de informacoes e aonde vamos aplicar
-// tap nao modifica os dados, serve apenas para visualiza-los
-// map realiza uma mudanca, os dados sao recebidos e transformados
+// Pipe - Função que serve para agrupar múltiplos operadores. Não modifica o observable anterior.
+
+// Tap - Operador de serviços públicos. Usado para debugging. Não modifica o observable.
+
+// Map - Operador de transformação. Transforma o observable de acordo com a função passada. Retorna um observable modificado.
