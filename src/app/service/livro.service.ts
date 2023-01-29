@@ -17,10 +17,9 @@ export class LivroService {
     return this.http
       .get<LivrosResultado>(this.API, { params })
       .pipe(
-        tap (retornoAPI => console.log('fluxo do tap', retornoAPI)),
+        // tap (retornoAPI => console.log('fluxo do tap', retornoAPI)),
         map(resultado => resultado.items),
-        tap(resultado => console.log('Fluxo apos map', resultado)
-        )
+        // tap(resultado => console.log('Fluxo apos map', resultado))
       )
   }
 }
