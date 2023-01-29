@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl } from '@angular/forms';
-import { catchError, debounceTime, distinctUntilChanged, filter, map, switchMap, tap, throwError } from "rxjs";
+import { catchError, debounceTime, distinctUntilChanged, EMPTY, filter, map, switchMap, tap, throwError } from "rxjs";
 import { Item } from "src/app/models/interfaces";
 import { LivroVolumeInfo } from 'src/app/models/livroVolumeInfo';
 import { LivroService } from "src/app/service/livro.service";
@@ -15,6 +15,8 @@ export class ListaLivrosComponent {
   
   campoBusca = new FormControl
 
+  mensagemErro = ''
+
   constructor(private service: LivroService) { }
 
   //MARK: o $ é uma convencao da comunidade usar o $ no final da variavel quando essa varialvel apresenta um observable
@@ -28,8 +30,12 @@ export class ListaLivrosComponent {
           switchMap((valorDigitado) => this.service.buscar(valorDigitado)),
           tap((retornoAPI) => console.log(retornoAPI)),
           map((items) => this.livrosResultadoParaLivros(items)),
-          catchError(erro => {console.log(erro)
-            return throwError(() => new Error('su aplicacao foi de comes e bebes'))
+          catchError(() => {
+            this.mensagemErro = 'Ops, ocorreu um erro, Recarregue a aplicação!'
+            return EMPTY
+            // console.log(erro
+            // return throwError(() => new Error(
+            //     this.mensagemErro = 'Ops, ocorreu um erro, Recarregue a aplicação!'))
           })
         )
 
